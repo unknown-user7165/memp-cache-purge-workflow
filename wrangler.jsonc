@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cache-purge-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-24",
+  "workers_dev": false,
+
+  "workflows": [
+    {
+      // This name is what you pass to `wrangler workflows trigger`
+      "name": "cache-purge-workflow",
+      "binding": "CACHE_PURGE_WORKFLOW",
+      "class_name": "CachePurgeWorkflow"
+    }
+  ],
+
+  // Bind to the same KV namespace your main API worker uses.
+  // Find your namespace ID with: npx wrangler kv namespace list
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "3b8d11a5ffb54d49b636f115dd74a493"
+    }
+  ]
+
+  // When you're ready to run this on a schedule, uncomment the block below
+  // and add the scheduled handler export to src/index.ts:
+  //
+  // "triggers": {
+  //   "crons": ["0 6 * * *"]
+  // }
+}
